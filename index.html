@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Спаси Галактику</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Кликер: Спаси Галактику. Убивайте монстров, кликая на них, и улучшайте оружие!">
+    <meta name="theme-color" content="#6464b6">
+    <!-- Yandex.Metrika counter -->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(55557718, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/55557718" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+    <!-- /Yandex.Metrika counter -->
+    <link rel="shortcut icon" href="images/galaxy.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="reset.min.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="https://yandex.ru/games/sdk/v2"></script>
+</head>
+<body translate="no">
+<div class="start"></div>
+<div class="game none">
+    <div class="property">
+        <div class="blackout" v-show="blackout" @click="removeBlackout"></div>
+        <div class="levels" v-show="showLevels">
+            <h2 class="levelHead">Планеты</h2>
+            <div class="level" v-for="(el, index) in levels" @click="startLevel(index)"
+                 :style="{background: getLevelPlanet(index)}" :class="!canUsePlanet(index) ? 'levelNot' : ''">
+                <div class="shadowLevel" :class="[index === 5 ? 'saturnShadow' : '',
+                 index === 6 ? 'uranusShadow' : '']"></div>
+                <div class="notLevel" v-show="!canUsePlanet(index)"></div>
+                <div class="lvlName">
+                    {{el}}
+                </div>
+            </div>
+            <div class="caution" v-show="reset">
+                <p>Вы уверены, что хотите сбросить прогресс?</p>
+                <div class="buttons">
+                    <button id="notDelete" @click="resetProgr">Нет! Вернуться</button>
+                    <button class="delete" id="deleteCertain" @click="resetCertain">Сбросить прогресс</button>
+                </div>
+            </div>
+            <button class="resetProgress level" @click="resetProgr">Сбросить прогресс</button>
+        </div>
+        <div class="content" v-show="content">
+            <div class="topMenu">
+                <div class="allDamage">
+                    <div class="damage">Урон: {{getNormalNumber(damage)}}</div>
+                    <div class="dps">ДПС: {{getNormalNumber(dps)}}</div>
+                </div>
+                <div class="menu" @click="returnMenu" :class="[rotateContent ? 'rotateContent' : '']"></div>
+                <div class="money">{{getNormalNumber(money)}}<img src="images/coin.svg" class="coin"></div>
+            </div>
+            <div class="monsterWrapper">
+                <div class="gotMonsters">
+                    <div class="leftMonster" v-show="!(this.monster === 0 && this.lvl === 0)"
+                         @click="changeMonsterLeft"></div>
+
+
+                    {{this.monster === 4 ? 'БОСС' : gotLevels[this.lvl][this.monster] < 10 ?
+                    gotLevels[this.lvl][this.monster] + '/10' : 'ПРОЙДЕНО'}}
+                    <div class="skull"></div>
+
+
+                    <div class="rightMonster" @click="changeMonsterRight"
+                         v-show=" !(this.monster === 4 && this.lvl === 8) && ((this.monster === 4 && this.gotLevels[this.lvl][this.monster] >= 1)
+                          || this.gotLevels[this.lvl][this.monster]>=10)"></div>
+                </div>
+
+
+                <div class="planet" :style="{background: planetImg}">
+                    <div class="advert" v-if="advTime" @click="showAdv"></div>
+                    <div class="shadowLevel" :class="[this.lvl === 5 ? 'saturnShadow' : '',
+                 this.lvl === 6 ? 'uranusShadow' : '']"></div>
+                    <div class="monster"
+                         @click="clickMonster"
+                         :class="[animShowMonster ? 'showMonster' : '', animKillMonster ? 'killMonster' : '']">
+                    </div>
+                    <div class="timer" v-if="timer">{{time}}</div>
+                </div>
+                <div class="advPrise" v-show="isAdvShow">
+                    За просмотр рекламы вы получили:<br>
+                    Урон +50%<br>
+                    ДПС +50%<br>
+                    на 4 минуты
+                    <div class="okAdv" @click="okAdv">Спасибо</div>
+                </div>
+                <div class="progress progress-moved">
+                    <div class="hp">{{getNormalNumber(hp)}}/{{getNormalNumber(allHp)}}</div>
+                    <div class="progress-bar" :style="{width: hp/allHp*100 +'%'}"></div>
+                </div>
+            </div>
+            <div class="weapons">
+                <div class="weapon" v-for="(el, index) in allWeapons" v-show="index < 31 || (index >= 31 && newLevels)">
+                    <div class="weaponImg" :style="{background:
+                    'url(images/wp'+ index +'.svg) center center no-repeat #5353ae / 90%'}"
+                    ></div>
+                    <div class="money">{{getNormalNumber(getPercent(allWeapons[index].cost, myWeapons[index]))}}<img src="images/clover.svg" class="coin"></div>
+                    <div class="weaponDamage">
+                        Урон +{{getNormalNumber(el.damage)}}
+                        <br>
+                        ДПС {{el.dps === 0 ? 0 : '+' + getNormalNumber(el.dps)}}
+                    </div>
+                    <div class="weaponLvl">Уровень {{myWeapons[index]}}</div>
+                    <button class="improve" @click="improveWeapon(index)"
+                            :class="[money >= getPercent(allWeapons[index].cost, myWeapons[index]) ? '' : 'notImptove']">Улучшить
+                    </button>
+                </div>
+            </div>
+            <div class="arrowLeft" @click="switchWeaponLeft"></div>
+            <div class="arrow" @click="switchWeaponRight"></div>
+        </div>
+    </div>
+</div>
+<script src="vue.min.js"></script>
+<script src="index.js"></script>
+<script src="sw.js" type="text/javascript"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+            .register('sw.js')
+            .then(function (reg) {
+                console.log('Registration succeeded. Scope is ' + reg.scope);
+            })
+            .catch(function (error) {
+                console.error('Trouble with sw: ', error);
+            });
+    }
+</script>
+</body>
+</html>
