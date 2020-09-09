@@ -104,7 +104,7 @@
             <div class="weapons">
                 <div class="weapon" v-for="(el, index) in allWeapons" v-show="index < 31 || (index >= 31 && newLevels)">
                     <div class="weaponImg" :style="{background:
-                    'url(images/wp'+ index +'.svg) center center no-repeat #5353ae / 90%'}"
+                    'url(images/wp'+ index +'.svg) center center no-repeat #5353ae'}"
                     ></div>
                     <div class="money">{{getNormalNumber(getPercent(allWeapons[index].cost, myWeapons[index]))}}<img src="images/clover.svg" class="coin"></div>
                     <div class="weaponDamage">

@@ -219,7 +219,7 @@ window.onload = function(){
                 return index === 0 || this.gotLevels[index - 1][4] >= 1;
             },
             getLevelPlanet(lvl){
-                return 'url(images/' + this.planetsImgs[lvl] + '.svg) center center no-repeat / 100%';
+                return 'url(images/' + this.planetsImgs[lvl] + '.svg) center center no-repeat';
             },
             getPercent(cost, lvl){
                 if(lvl === 0) return cost;
@@ -422,7 +422,8 @@ window.onload = function(){
             setMonsterImg(){
                 let monsterBlock = document.querySelector('.monster');
                 monsterBlock.style.background = "url(" + 'images/mtr-' + this.lvl + '-' + this.monster + '.svg'
-                    + ") center center no-repeat / 100%";
+                    + ") center center no-repeat";
+                monsterBlock.style.backgroundSize = "100%";
             },
             setMonsterHP(){
                 let coef = 1;

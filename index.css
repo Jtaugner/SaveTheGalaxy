@@ -55,7 +55,6 @@ img {
 
 .content, .property {
   width: 100%;
-  height: 100%;
 }
 
 .content {
@@ -302,7 +301,8 @@ img {
 .skull {
   width: 45px;
   height: 45px;
-  background: url(images/skull.svg) center center no-repeat/100%;
+  background: url(images/skull.svg) center center no-repeat;
+  background-size: 100%;
   margin-left: 10px;
 }
 
@@ -414,7 +414,8 @@ img {
   transform: translateY(-50%);
   width: 50px;
   height: 50px;
-  background: url(images/left-arrow.svg) center center no-repeat/100%;
+  background: url(images/left-arrow.svg) center center no-repeat;
+  background-size: 100%;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -422,7 +423,8 @@ img {
 .arrow, .arrowLeft {
   position: absolute;
   bottom: 120px;
-  background: url(images/left-arrow2.svg) center center no-repeat/100%;
+  background: url(images/left-arrow2.svg) center center no-repeat;
+  background-size: 100%;
   width: 35px;
   height: 35px;
   cursor: pointer;
@@ -459,7 +461,8 @@ img {
 }
 
 .advert {
-  background: url(images/add-video.svg) center center no-repeat/100%;
+  background: url(images/add-video.svg) center center no-repeat;
+  background-size: 100%;
   top: 8px;
   left: 0;
   width: 55px;
@@ -704,7 +707,8 @@ img {
   position: absolute;
   width: 32px;
   height: 32px;
-  background: url(images/explosion.svg) center center no-repeat/100%;
+  background: url(images/explosion.svg) center center no-repeat;
+  background-size: 100%;
   animation: disappear linear forwards 0.4s;
   z-index: 2;
 }
@@ -757,6 +761,13 @@ img {
   .money, .damage, .dps {
     font-size: 2.3rem;
   }
+}
+.level, .planet {
+  background-size: 100% !important;
+}
+
+.weaponImg {
+  background-size: 90% !important;
 }
 
 /*# sourceMappingURL=index.css.map */
