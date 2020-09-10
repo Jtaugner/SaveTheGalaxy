@@ -5,10 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/index.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obl.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -126,6 +123,8 @@
       <workItem from="1576413134631" duration="348000" />
       <workItem from="1578488744628" duration="539000" />
       <workItem from="1578506764845" duration="381000" />
+      <workItem from="1599656563605" duration="266000" />
+      <workItem from="1599746802733" duration="2240000" />
     </task>
     <servers />
   </component>
